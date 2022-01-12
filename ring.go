@@ -60,7 +60,7 @@ func (sq SQRing) Event() sqeArray {
 func (sq SQRing) IsCQOverflow() bool {
 	return atomic.LoadUint32(sq.Flags())&IORING_SQ_CQ_OVERFLOW > 0
 }
-func (sq SQRing) IsNeedWakeup() bool {
+func (sq SQRing) NeedWakeup() bool {
 	return atomic.LoadUint32(sq.Flags())&IORING_SQ_NEED_WAKEUP > 0
 }
 

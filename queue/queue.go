@@ -105,7 +105,7 @@ func (q *Queue) isNeedEnter(flags *uint32) bool {
 	if (q.ring.Params().Features & gouring.IORING_SETUP_SQPOLL) > 0 {
 		return true
 	}
-	if q.sq.IsNeedWakeup() {
+	if q.sq.NeedWakeup() {
 		*flags |= gouring.IORING_SQ_NEED_WAKEUP
 		return true
 	}
