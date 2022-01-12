@@ -101,7 +101,7 @@ func (q *Queue) sqFlush() uint32 {
 	return ktail - *q.sq.Head()
 }
 
-func (q *Queue) isNeedEnter(flags *uint32) bool {
+func (q *Queue) needEnter(flags *uint32) bool {
 	if (q.ring.Params().Features & gouring.IORING_SETUP_SQPOLL) > 0 {
 		return true
 	}
@@ -124,7 +124,7 @@ func (q *Queue) SubmitAndWait(waitNr uint) (ret int, err error) {
 	submitted := q.sqFlush()
 
 	var flags uint32
-	if !q.isNeedEnter(&flags) || submitted == 0 {
+	if !q.needEnter(&flags) || submitted == 0 {
 		return
 	}
 
