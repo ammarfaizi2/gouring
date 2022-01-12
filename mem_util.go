@@ -113,7 +113,6 @@ func unsetup(r *Ring) (err error) {
 	if !featSingleMap || r.sqRingPtr != r.cqRingPtr { // not a single map
 		if err = munmap(r.cqRingPtr, uintptr(r.cringSz)); err != nil {
 			err = errors.Wrap(err, "munmap cq")
-			return
 		}
 	}
 	return
@@ -122,7 +121,6 @@ func unsetup(r *Ring) (err error) {
 func register(r *Ring, opcode UringRegisterOpcode, arg uintptr, nrArg uint) (ret int, err error) {
 	if ret, err = io_uring_register(r.fd, opcode, arg, nrArg); err != nil {
 		err = errors.Wrap(err, "io_uring_register")
-		return
 	}
 	return
 }
@@ -130,7 +128,6 @@ func register(r *Ring, opcode UringRegisterOpcode, arg uintptr, nrArg uint) (ret
 func enter(r *Ring, toSubmit, minComplete uint, flags UringEnterFlag, sig *Sigset_t) (ret int, err error) {
 	if ret, err = io_uring_enter(r.fd, toSubmit, minComplete, uint(flags), sig); err != nil {
 		err = errors.Wrap(err, "io_uring_enter")
-		return
 	}
 	return
 }
